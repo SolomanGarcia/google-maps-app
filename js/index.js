@@ -1,5 +1,6 @@
 var map;
 var infoWindow;
+var markers = [];
 
 function initMap() {
   let losAngeles = { lat: 34.06338, lng: -118.35808 };
@@ -24,7 +25,17 @@ const getStores = () => {
     .then((data) => {
       searchLocationsNear(data);
       setStoresList(data);
+      setOnClickListener();
     });
+};
+
+const setOnClickListener = () => {
+  let storeElements = document.querySelectorAll(".store-container");
+  storeElements.forEach((elem, index) => {
+    elem.addEventListener("click", () => {
+      google.maps.event.trigger(markers[index], "click");
+    });
+  });
 };
 
 const setStoresList = (stores) => {
@@ -113,4 +124,5 @@ const createMarker = (
     infoWindow.setContent(html);
     infoWindow.open(map, marker);
   });
+  markers.push(marker);
 };
