@@ -4,6 +4,8 @@ html {
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 #map {
@@ -177,5 +179,36 @@ body {
   background-color: #cccccc87;
 }
 
+.intro {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.enter-zip {
+  color: #514c4c;
+  font-size: 2.2rem;
+}
+
+.find-stores {
+  color: #1985a1;
+  font-size: 2rem;
+}
+
+.no-stores-found {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #514c4c;
+  font-size: 2rem;
+}
+
+.store-number-hover-state {
+  color: #454E53;
+  background-color: #B5ADAD;
+}
 
 

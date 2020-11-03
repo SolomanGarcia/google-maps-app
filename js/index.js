@@ -3,10 +3,14 @@ var infoWindow;
 var markers = [];
 
 function initMap() {
-  let losAngeles = { lat: 34.06338, lng: -118.35808 };
+  let denver = { lat: 39.742043, lng: -104.991531 };
   map = new google.maps.Map(document.getElementById("map"), {
-    center: losAngeles,
-    zoom: 8
+    center: denver,
+    zoom: 11,
+    mapTypeId: "roadmap",
+    mapTypeControl: false,
+    fullscreenControl: false,
+    streetViewControl: false
   });
   infoWindow = new google.maps.InfoWindow();
 }
@@ -33,10 +37,15 @@ const getStores = () => {
       }
     })
     .then((data) => {
-      clearLocations();
-      searchLocationsNear(data);
-      setStoresList(data);
-      setOnClickListener();
+      if (data.length > 0) {
+        clearLocations();
+        searchLocationsNear(data);
+        setStoresList(data);
+        setOnClickListener();
+      } else {
+        clearLocations();
+        noStoresFound();
+      }
     });
 };
 
@@ -48,9 +57,28 @@ const clearLocations = () => {
   markers.length = 0;
 };
 
+const noStoresFound = () => {
+  const html = `
+    <div class="no-stores-found">
+      No Stores Found
+    </div>
+  `;
+  document.querySelector(".stores-list").innerHTML = html;
+};
+
 const setOnClickListener = () => {
   let storeElements = document.querySelectorAll(".store-container");
   storeElements.forEach((elem, index) => {
+    elem.addEventListener("mouseover", () => {
+      elem
+        .querySelector(".store-number")
+        .classList.add("store-number-hover-state");
+    });
+    elem.addEventListener("mouseout", () => {
+      elem
+        .querySelector(".store-number")
+        .classList.remove("store-number-hover-state");
+    });
     elem.addEventListener("click", () => {
       google.maps.event.trigger(markers[index], "click");
     });
